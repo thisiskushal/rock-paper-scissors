@@ -84,7 +84,7 @@ jobs:
           # Show the output
           cat out.txt
           # Update the PR comment
-          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}  gh pr comment --body-file out.txt
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}  gh pr comment master --body-file out.txt
 
 
 
