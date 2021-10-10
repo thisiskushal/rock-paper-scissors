@@ -42,7 +42,8 @@ jobs:
       - name: Step4 - Have Gibub Actions build Maven Project
         run: |
           # Build
-          jfrog rt mvn -B package --file pom.xml
+          #jfrog rt mvn -B package --file pom.xml
+          jfrog rt mvn clean install --file pom.xml
           # Get the java-version
           version=$(./jfrog -v | cut -d " " -f 3)
           echo Build JFrog CLI version $version
