@@ -43,7 +43,8 @@ jobs:
         run: |
           # Build
           #jfrog rt mvn -B package --file pom.xml
-          jfrog rt mvn clean install -f pom.xml
+          #jfrog rt mvn clean install -f pom.xml
+          jfrog rt mvn -f pom.xml
           # Get the java-version
           version=$(./jfrog -v | cut -d " " -f 3)
           echo Build JFrog CLI version $version
