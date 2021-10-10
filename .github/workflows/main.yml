@@ -54,6 +54,7 @@ jobs:
           # Replace ‘my_art_server’ with your imported server
           #jfrog rt mvn-config --server-id-resolve=${{ secrets.JF_ARTIFACTORY_SECRET_1 }}  --repo-resolve-releases=libs-release-remote --repo-resolve-snapshots=libs-snapshot-remote
           jfrog rt mvn-config --server-id-resolve=$SERVER_ID  --repo-resolve-releases=maven-remote --repo-resolve-snapshots=maven-remote
+          #--repo-deploy-releases=backend-libs-release-local --repo-deploy-snapshots=backend-libs-snapshot-local
           # Build the maven project
           jfrog rt mvn clean install
       - name: Step6- Failure check
@@ -69,7 +70,7 @@ jobs:
           #jfrog rt mvn clean install -f pom.xml
           #jfrog rt mvn -f pom.xml
           # Get the java-version
-          version=$(./jfrog -v | cut -d " " -f 3)
+          version=$(jfrog -v | cut -d " " -f 3)
           echo Build JFrog CLI version $version
           # Upload the jfrog-cli binary
           jfrog rt u jfrog backend-libs-snapshot-local/jfrog-cli-releases/$version/
