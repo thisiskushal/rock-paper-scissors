@@ -81,8 +81,10 @@ jobs:
           jfrog rt bp 
           # Scan build with JFrog Xray
           jfrog rt bs --fail=false > out.txt
+          # Show the output
+          cat out.txt
           # Update the PR comment
-          gh pr comment --body-file out.txt
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}  gh pr comment --body-file out.txt
 
 
 
