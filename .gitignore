@@ -2,3 +2,5 @@ target
 .classpath
 .project
 org.eclipse.*
+settings.*
+.factorypath
