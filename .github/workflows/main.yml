@@ -81,7 +81,11 @@ jobs:
           jfrog rt bp 
           # Scan build with JFrog Xray
           #jfrog rt bs --fail=false > out.txt
-          jfrog rt bs --fail=true > out.txt
+          #jfrog rt bs --fail=true > out.txt
+         
+          jfrog rt bs JFROG_CLI_BUILD_NAME  JFROG_CLI_BUILD_NUMBER  > out.txt
+          sleep 30
+          jfrog rt bs JFROG_CLI_BUILD_NAME  JFROG_CLI_BUILD_NUMBER  >> out.txt
           # Show the output
           cat out.txt
           # Update the PR comment
