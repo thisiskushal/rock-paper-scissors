@@ -80,7 +80,8 @@ jobs:
           #Publish build-info
           jfrog rt bp 
           # Scan build with JFrog Xray
-          jfrog rt bs --fail=false > out.txt
+          #jfrog rt bs --fail=false > out.txt
+          jfrog rt bs --fail=true > out.txt
           # Show the output
           cat out.txt
           # Update the PR comment
