@@ -34,12 +34,12 @@ jobs:
       - name: Step 2-  Checkout main branch from Github
         uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
+      # Setup JDK 1.8
       - name: Step3 - Setup JDK 1.8
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      # Runs a set of commands using the runners shell
+      # Verify artifactory conenctivity
       - name: Step4 - Ping RT
         run: |
           # Ping the server
@@ -55,7 +55,11 @@ jobs:
           #jfrog rt mvn-config --server-id-resolve=${{ secrets.JF_ARTIFACTORY_SECRET_1 }}  --repo-resolve-releases=libs-release-remote --repo-resolve-snapshots=libs-snapshot-remote
           jfrog rt mvn-config --server-id-resolve=$SERVER_ID --server-id-deploy=$SERVER_ID --repo-resolve-releases=maven-remote --repo-resolve-snapshots=maven-remote --repo-deploy-releases=backend-libs-release-local --repo-deploy-snapshots=backend-libs-snapshot-local                                                                                                                                                                                                                                                                                                 
           # Build the maven project
+          #jfrog rt mvn -B package --file pom.xml
+          #jfrog rt mvn clean install -f pom.xml
+          #jfrog rt mvn -f pom.xml
           jfrog rt mvn clean install
+
       - name: Step6- Failure check
         run: |
           echo "JFROG_BUILD_STATUS=FAIL" >> $GITHUB_ENV
@@ -64,15 +68,6 @@ jobs:
       
       - name: Step7 - Publish to RT
         run: |
-          # Build
-          #jfrog rt mvn -B package --file pom.xml
-          #jfrog rt mvn clean install -f pom.xml
-          #jfrog rt mvn -f pom.xml
-          # Get the java-version
-          #version=$(jfrog -v | cut -d " " -f 3)
-          #echo Build JFrog CLI version $version
-          # Upload the jfrog-cli binary
-          #jfrog rt u jfrog backend-libs-snapshot-local/jfrog-cli-releases/$version/
           # Add env vars
           jfrog rt bce
           # Collect VCS details from git and add them to the build
@@ -81,9 +76,6 @@ jobs:
           jfrog rt bp 
           # Scan build with JFrog Xray
           jfrog rt bs --fail=false > out.txt
-          #jfrog rt bs --fail=true > out.txt
-         
-          #jfrog rt bs JFROG_CLI_BUILD_NAME  JFROG_CLI_BUILD_NUMBER  > out.txt
 
           # Show the output
           cat out.txt
